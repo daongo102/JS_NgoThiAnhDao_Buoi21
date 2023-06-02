@@ -14,10 +14,8 @@ function NhanVien(taiKhoan,ten,email,matKhau,ngayLam,luong,chucVu,gioLam) {
             this.tongLuong = this.luongNV * 3;
         } else if (this.chucVuNV == "Trưởng phòng") {
             this.tongLuong = this.luongNV * 2;
-        } else if(this.chucVuNV == "Nhân viên"){
-            this.tongLuong = this.luongNV;
         }else{
-            alert("Bạn chưa chọn chức vụ");
+            this.tongLuong = this.luongNV;
         }
     };
     this.xepLoai = function () {

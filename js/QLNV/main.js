@@ -33,25 +33,41 @@ function themNhanVien() {
     // console.log(taiKhoan,ten,email,matKhau,ngayLam,luong,chucVu,gioLam)
     var isValid = true;
 
-    isValid &= validation.checkEmpty(taiKhoan, "tbTKNV", "Tài khoản không được để trống") && validation.checkID(taiKhoan, "tbTKNV", "Tài khoản không được trùng",dsnv.mangNV) && validation.checkNumber(taiKhoan, "tbTKNV", "Tài khoản không đúng định dạng. Gồm 4 - 6 số");
+    //! Tài khoản
+    isValid &= validation.checkEmpty(taiKhoan, "tbTKNV", "Tài khoản không được để trống") && validation.checkID(taiKhoan, "tbTKNV", "Tài khoản không được trùng", dsnv.mangNV) && validation.checkNumber(taiKhoan, "tbTKNV", "Tài khoản không đúng định dạng. Gồm 4 - 6 ký số, không bao gồm ký tự đặc biệt");
+
+    //! Tên NV
     isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ");
+
+    //! Email
     isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
+
+    //! Mật khẩu
     isValid &= validation.checkPass(matKhau, "tbMatKhau", "- Mật khẩu không hợp lệ. Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt");
+
+    //! Ngày làm
     isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống");
-    isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống");
-    isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống");
+
+    //! Lương
+    isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
+
+    //! Chức vụ
+    isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống");
+
+    //! Giờ làm
+    isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ");
 
     if (isValid) {
         var nv = new NhanVien(taiKhoan, ten, email, matKhau, ngayLam, Number(luong), chucVu, Number(gioLam));
         nv.calcLuong();
         nv.xepLoai();
         // console.log(nv)
-
+        
         dsnv.themNV(nv);
         // console.log(dsnv.mangNV)  
         setLocalStorage();
         hienThiBang(dsnv.mangNV);
-        resetDL();
+
     }
 }
 document.getElementById("btnThemNV").onclick = themNhanVien;
@@ -76,7 +92,7 @@ function hienThiBang(mang) {
         </tr>`;
         content += trNV;
     })
-    // console.log(content)image.png
+    // console.log(content)
     document.getElementById("tableDanhSach").innerHTML = content;
 }
 
@@ -107,6 +123,7 @@ function xemThongTin(taiKhoan) {
     }
 }
 
+
 //! CẬP NHẬT
 function capNhatThongTin() {
     var taiKhoan = document.getElementById("tknv").value;
@@ -118,18 +135,44 @@ function capNhatThongTin() {
     var chucVu = document.getElementById("chucvu").value;
     var gioLam = document.getElementById("gioLam").value;
 
-    var nv = new NhanVien(taiKhoan, ten, email, matKhau, ngayLam, Number(luong), chucVu, Number(gioLam));
-    nv.calcLuong();
-    nv.xepLoai();
-    // console.log(nv)
+    var isValid = true;
 
-    var ketQua = dsnv.capNhat(nv);
-    if (ketQua) {
-        setLocalStorage();
-        hienThiBang(dsnv.mangNV);
-        resetDL();
-    } else {
-        alert("Cập nhật thất bại!")
+    //! Tên NV
+    isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ");
+
+    //! Email
+    isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
+
+    //! Mật khẩu
+    isValid &= validation.checkPass(matKhau, "tbMatKhau", "- Mật khẩu không hợp lệ. Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt");
+
+    //! Ngày làm
+    isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống");
+
+    //! Lương
+    isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
+
+    //! Chức vụ
+    isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống");
+
+    //! Giờ làm
+    isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ");
+
+    if (isValid) {
+        var nv = new NhanVien(taiKhoan, ten, email, matKhau, ngayLam, Number(luong), chucVu, Number(gioLam));
+        nv.calcLuong();
+        nv.xepLoai();
+        // console.log(nv)
+
+        var ketQua = dsnv.capNhat(nv);
+        if (ketQua) {
+            setLocalStorage();
+            hienThiBang(dsnv.mangNV);
+            resetDL();
+        } else {
+            alert("Cập nhật thất bại!")
+        }
+
     }
 }
 document.getElementById("btnCapNhat").onclick = capNhatThongTin;
@@ -137,7 +180,7 @@ document.getElementById("btnCapNhat").onclick = capNhatThongTin;
 
 //! RESET
 function resetDL() {
-    document.getElementById("tknv").value = "";    
+    document.getElementById("tknv").value = "";
     document.getElementById("tknv").disabled = false;
     document.getElementById("tbTKNV").style.display = "none";
     document.getElementById("name").value = "";
@@ -154,4 +197,13 @@ function resetDL() {
     document.getElementById("gioLam").value = "";
     document.getElementById("tbGiolam").style.display = "none";
 }
-document.getElementById("btnThem").onclick = resetDL;
+document.getElementById("btnDong").onclick = resetDL;
+
+
+//! TÌM NHÂN VIÊN THEO LOẠI
+document.getElementById("searchName").onkeyup = function () {
+
+    var tuTim = document.getElementById("searchName").value;
+    var mangTK = dsnv.timKiemTheoLoaiNV(tuTim);
+    hienThiBang(mangTK);
+}

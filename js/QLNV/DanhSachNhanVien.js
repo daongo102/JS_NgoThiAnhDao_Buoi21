@@ -31,14 +31,21 @@ function DanhSachNhanVien() {
             return true;
         }
     }
-
+    
 }
 
-DanhSachNhanVien.prototype.timKiemTheoLoaiNV= function(){
+DanhSachNhanVien.prototype.timKiemTheoLoaiNV = function (tuTim) {
     var mangTK = [];
-    var loai = "";
-    this.mangNV.map(function(nv,index){
-        
-    })
+    var tuTimThuong = tuTim.toLowerCase();
+    var tuTimReplace = tuTimThuong.replace(/\s/g, "");
+    this.mangNV.map(function (nv, index) {
+        var tenThuong = nv.loaiNV.toLowerCase();
+        var tenReplace = tenThuong.replace(/\s/g, "");
 
+        var result = tenReplace.indexOf(tuTimReplace);
+        if (result > -1) {
+            mangTK.push(nv);
+        }
+    });
+    return mangTK;
 }
