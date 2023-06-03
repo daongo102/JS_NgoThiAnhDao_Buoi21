@@ -10,7 +10,7 @@ function setLocalStorage() {
 //! LẤY LOCAL STORAGE
 function getLocalStorage() {
     var dataLocal = JSON.parse(localStorage.getItem("DSNV"));
-    
+
     if (dataLocal !== null) {
         hienThiBang(dataLocal);
         dsnv.mangNV = dataLocal;
@@ -29,7 +29,7 @@ function themNhanVien() {
     var luong = document.getElementById("luongCB").value;
     var chucVu = document.getElementById("chucvu").value;
     var gioLam = document.getElementById("gioLam").value;
-    
+
     var isValid = true;
 
     //! Tài khoản
@@ -66,7 +66,7 @@ function themNhanVien() {
         // console.log(dsnv.mangNV)  
         setLocalStorage();
         hienThiBang(dsnv.mangNV);
-        alert('Đăng ký thành công');
+        alert('Thêm người dùng thành công');
     }
 }
 document.getElementById("btnThemNV").onclick = themNhanVien;
@@ -141,34 +141,34 @@ function capNhatThongTin() {
 
     var ketQua = dsnv.capNhat(nv);
     if (ketQua) {
-        var isValid = true;       
-    
+        var isValid = true;    
+
         //! Tên NV
         isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ");
-    
+
         //! Email
         isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
-    
+
         //! Mật khẩu
         isValid &= validation.checkPass(matKhau, "tbMatKhau", "- Mật khẩu không hợp lệ. Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt");
-    
+
         //! Ngày làm
         isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống");
-    
+
         //! Lương
         isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
-    
+
         //! Chức vụ
         isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống");
-    
+
         //! Giờ làm
         isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ");
 
-        if(isValid){
+        if (isValid) {
             setLocalStorage();
-        hienThiBang(dsnv.mangNV);
-        resetDL();
-        }        
+            hienThiBang(dsnv.mangNV);
+            resetDL();
+        }
     } else {
         alert("Cập nhật thất bại!")
     }
@@ -205,3 +205,5 @@ document.getElementById("searchName").onkeyup = function () {
     var mangTK = dsnv.timKiemTheoLoaiNV(tuTim);
     hienThiBang(mangTK);
 }
+
+
