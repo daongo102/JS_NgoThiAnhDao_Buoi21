@@ -10,7 +10,7 @@ function setLocalStorage() {
 //! LẤY LOCAL STORAGE
 function getLocalStorage() {
     var dataLocal = JSON.parse(localStorage.getItem("DSNV"));
-    // console.log(dataLocal)
+    
     if (dataLocal !== null) {
         hienThiBang(dataLocal);
         dsnv.mangNV = dataLocal;
@@ -29,8 +29,7 @@ function themNhanVien() {
     var luong = document.getElementById("luongCB").value;
     var chucVu = document.getElementById("chucvu").value;
     var gioLam = document.getElementById("gioLam").value;
-
-    // console.log(taiKhoan,ten,email,matKhau,ngayLam,luong,chucVu,gioLam)
+    
     var isValid = true;
 
     //! Tài khoản
@@ -62,12 +61,12 @@ function themNhanVien() {
         nv.calcLuong();
         nv.xepLoai();
         // console.log(nv)
-        
+
         dsnv.themNV(nv);
         // console.log(dsnv.mangNV)  
         setLocalStorage();
         hienThiBang(dsnv.mangNV);
-
+        alert('Đăng ký thành công');
     }
 }
 document.getElementById("btnThemNV").onclick = themNhanVien;
@@ -135,44 +134,43 @@ function capNhatThongTin() {
     var chucVu = document.getElementById("chucvu").value;
     var gioLam = document.getElementById("gioLam").value;
 
-    var isValid = true;
+    var nv = new NhanVien(taiKhoan, ten, email, matKhau, ngayLam, Number(luong), chucVu, Number(gioLam));
+    nv.calcLuong();
+    nv.xepLoai();
+    // console.log(nv)
 
-    //! Tên NV
-    isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ");
+    var ketQua = dsnv.capNhat(nv);
+    if (ketQua) {
+        var isValid = true;       
+    
+        //! Tên NV
+        isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ");
+    
+        //! Email
+        isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
+    
+        //! Mật khẩu
+        isValid &= validation.checkPass(matKhau, "tbMatKhau", "- Mật khẩu không hợp lệ. Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt");
+    
+        //! Ngày làm
+        isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống");
+    
+        //! Lương
+        isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
+    
+        //! Chức vụ
+        isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống");
+    
+        //! Giờ làm
+        isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ");
 
-    //! Email
-    isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
-
-    //! Mật khẩu
-    isValid &= validation.checkPass(matKhau, "tbMatKhau", "- Mật khẩu không hợp lệ. Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt");
-
-    //! Ngày làm
-    isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống");
-
-    //! Lương
-    isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
-
-    //! Chức vụ
-    isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống");
-
-    //! Giờ làm
-    isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ");
-
-    if (isValid) {
-        var nv = new NhanVien(taiKhoan, ten, email, matKhau, ngayLam, Number(luong), chucVu, Number(gioLam));
-        nv.calcLuong();
-        nv.xepLoai();
-        // console.log(nv)
-
-        var ketQua = dsnv.capNhat(nv);
-        if (ketQua) {
+        if(isValid){
             setLocalStorage();
-            hienThiBang(dsnv.mangNV);
-            resetDL();
-        } else {
-            alert("Cập nhật thất bại!")
-        }
-
+        hienThiBang(dsnv.mangNV);
+        resetDL();
+        }        
+    } else {
+        alert("Cập nhật thất bại!")
     }
 }
 document.getElementById("btnCapNhat").onclick = capNhatThongTin;
@@ -194,6 +192,7 @@ function resetDL() {
     document.getElementById("luongCB").value = "";
     document.getElementById("tbLuongCB").style.display = "none";
     document.getElementById("chucvu").value = "Chọn chức vụ";
+    document.getElementById("tbChucVu").style.display = "none";
     document.getElementById("gioLam").value = "";
     document.getElementById("tbGiolam").style.display = "none";
 }
@@ -202,7 +201,6 @@ document.getElementById("btnDong").onclick = resetDL;
 
 //! TÌM NHÂN VIÊN THEO LOẠI
 document.getElementById("searchName").onkeyup = function () {
-
     var tuTim = document.getElementById("searchName").value;
     var mangTK = dsnv.timKiemTheoLoaiNV(tuTim);
     hienThiBang(mangTK);

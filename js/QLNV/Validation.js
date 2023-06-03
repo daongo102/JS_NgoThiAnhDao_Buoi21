@@ -73,9 +73,7 @@ function Validation() {
         document.getElementById(spanID).innerHTML = message;
         document.getElementById(spanID).style.display = "block";
         return false;
-    }
-
-   
+    }    
 
     this.checkLuong = function (value, spanID, message) {
         if (1000000 <= value && value <= 20000000) {

@@ -30,8 +30,7 @@ function DanhSachNhanVien() {
             dsnv.mangNV[indexFind] = nv;
             return true;
         }
-    }
-    
+    }    
 }
 
 DanhSachNhanVien.prototype.timKiemTheoLoaiNV = function (tuTim) {
