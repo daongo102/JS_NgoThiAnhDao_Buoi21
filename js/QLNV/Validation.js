@@ -67,13 +67,26 @@ function Validation() {
         var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,10}$/;
         if (pattern.test(value)) {
             document.getElementById(spanID).innerHTML = "";
+            document.getElementById(spanID).style.display = "none";            
+            return true;
+        }
+        document.getElementById(spanID).innerHTML = message;       
+        document.getElementById(spanID).style.display = "block";
+        return false;
+    } 
+    
+     this.checkDay = function (value, spanID, message) {
+        var day = moment(value, "MM/DD/YYYY",true).isValid();
+
+        if (day) {
+            document.getElementById(spanID).innerHTML = "";
             document.getElementById(spanID).style.display = "none";
             return true;
         }
         document.getElementById(spanID).innerHTML = message;
         document.getElementById(spanID).style.display = "block";
         return false;
-    }    
+    }
 
     this.checkLuong = function (value, spanID, message) {
         if (1000000 <= value && value <= 20000000) {

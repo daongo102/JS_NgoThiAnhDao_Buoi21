@@ -24,7 +24,7 @@ function themNhanVien() {
     var taiKhoan = document.getElementById("tknv").value;
     var ten = document.getElementById("name").value;
     var email = document.getElementById("email").value;
-    var matKhau = document.getElementById("password").value;
+    var matKhau = document.getElementById("password").value;    
     var ngayLam = document.getElementById("datepicker").value;
     var luong = document.getElementById("luongCB").value;
     var chucVu = document.getElementById("chucvu").value;
@@ -33,28 +33,28 @@ function themNhanVien() {
     var isValid = true;
 
     //! Tài khoản
-    isValid &= validation.checkEmpty(taiKhoan, "tbTKNV", "Tài khoản không được để trống") && validation.checkID(taiKhoan, "tbTKNV", "Tài khoản không được trùng", dsnv.mangNV) && validation.checkNumber(taiKhoan, "tbTKNV", "Tài khoản không đúng định dạng. Gồm 4 - 6 ký số, không bao gồm ký tự đặc biệt");
+    isValid &= validation.checkEmpty(taiKhoan, "tbTKNV", "Tài khoản không được để trống.") && validation.checkID(taiKhoan, "tbTKNV", "Tài khoản không được trùng.", dsnv.mangNV) && validation.checkNumber(taiKhoan, "tbTKNV", "Tài khoản không đúng định dạng. Gồm 4 - 6 ký số, không bao gồm ký tự đặc biệt.");
 
     //! Tên NV
-    isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ");
+    isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống.") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ.");
 
     //! Email
-    isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
+    isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng.");
 
     //! Mật khẩu
-    isValid &= validation.checkPass(matKhau, "tbMatKhau", "- Mật khẩu không hợp lệ. Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt");
+    isValid &= validation.checkPass(matKhau, "tbMatKhau","Mật khẩu: " + (document.getElementById("password").value) + " không hợp lệ! Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt.");
 
     //! Ngày làm
-    isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống");
+    isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống") && validation.checkDay(ngayLam, "tbNgay", "Ngày làm đúng định dạng MM/DD/YYYY.");
 
     //! Lương
     isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
 
     //! Chức vụ
-    isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống");
+    isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống.");
 
     //! Giờ làm
-    isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ");
+    isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống.") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ.");
 
     if (isValid) {
         var nv = new NhanVien(taiKhoan, ten, email, matKhau, ngayLam, Number(luong), chucVu, Number(gioLam));
@@ -144,25 +144,25 @@ function capNhatThongTin() {
         var isValid = true;    
 
         //! Tên NV
-        isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ");
+        isValid &= validation.checkEmpty(ten, "tbTen", "Họ và tên không được để trống.") && validation.checkName(ten, "tbTen", "Họ và tên chỉ được chứa ký tự chữ.");
 
         //! Email
-        isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
+        isValid &= validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng.");
 
         //! Mật khẩu
-        isValid &= validation.checkPass(matKhau, "tbMatKhau", "- Mật khẩu không hợp lệ. Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt");
+        isValid &= validation.checkPass(matKhau, "tbMatKhau","Mật khẩu: " + (document.getElementById("password").value) + " không hợp lệ! Gồm 6-10 ký tự, chứa ít nhất 1 ký tự số, 1 ký tự in hoa và 1 ký tự đặc biệt.");
 
         //! Ngày làm
-        isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống");
+        isValid &= validation.checkEmpty(ngayLam, "tbNgay", "Ngày làm không được để trống.") && validation.checkDay(ngayLam, "tbNgay", "Ngày làm đúng định dạng MM/DD/YYYY.");
 
         //! Lương
-        isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
+        isValid &= validation.checkEmpty(luong, "tbLuongCB", "Lương cơ bản không được để trống.") && validation.checkLuong(luong, "tbLuongCB", "Lương cơ bản từ 1.000.000 đến 20.000.000");
 
         //! Chức vụ
-        isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống");
+        isValid &= validation.checkChucVu(chucVu, "tbChucVu", "Chức vụ không được để trống.");
 
         //! Giờ làm
-        isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ");
+        isValid &= validation.checkEmpty(gioLam, "tbGiolam", "Giờ làm không được để trống.") && validation.checkGioLam(gioLam, "tbGiolam", "Giờ làm từ 80 - 200 giờ.");
 
         if (isValid) {
             setLocalStorage();
