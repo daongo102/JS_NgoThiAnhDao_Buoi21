@@ -66,6 +66,7 @@ function themNhanVien() {
         // console.log(dsnv.mangNV)  
         setLocalStorage();
         hienThiBang(dsnv.mangNV);
+        resetDL();
         alert('Thêm người dùng thành công');
     }
 }
@@ -196,7 +197,7 @@ function resetDL() {
     document.getElementById("gioLam").value = "";
     document.getElementById("tbGiolam").style.display = "none";
 }
-document.getElementById("btnDong").onclick = resetDL;
+
 
 
 //! TÌM NHÂN VIÊN THEO LOẠI
